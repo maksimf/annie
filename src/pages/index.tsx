@@ -25,7 +25,7 @@ const Index: React.FC<Props> = ({ venues }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const supabase = createClient<Database>(
     process.env.SUPABASE_URL || "",
     process.env.SUPABASE_ANON_KEY || ""
