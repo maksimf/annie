@@ -12,7 +12,8 @@ const Index: React.FC<Props> = ({ venues }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [postcode, setPostcode] = useState("");
-  const [showInfo, setShowInfo] = useState(false);
+  const [showInfo, setShowInfo] = useState(true);
+  const [selectedVenueIds, setSelectedVenueIds] = useState<number[]>([]);
 
   return (
     <div>
@@ -77,13 +78,51 @@ const Index: React.FC<Props> = ({ venues }) => {
         </div>
       </div>
       <div
-        className={classNames("mt-20 transition-all duration-500", {
+        className={classNames("mt-20 mb-10 transition-all duration-500", {
           "opacity-100": showInfo,
           "opacity-0": !showInfo,
         })}
       >
         <h2 className="text-3xl mb-2">Venues</h2>
-        <Venues venues={venues} />
+        <Venues
+          selectedVenueIds={selectedVenueIds}
+          setSelectedVenueIds={setSelectedVenueIds}
+          venues={venues}
+        />
+        <div>
+          <button
+            className="mt-5 px-2 py-4 bg-blue-500 text-white rounded text-xl w-full hover:bg-blue-600 transition-all duration-500"
+            onClick={async () => {
+              try {
+                const response = await fetch("/api/venues", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    name,
+                    email,
+                    postcode,
+                    venueIds: selectedVenueIds,
+                  }),
+                });
+
+                if (response.ok) {
+                  // Handle success
+                  setShowInfo(true);
+                } else {
+                  // Handle error
+                  console.error("Failed to submit form");
+                }
+              } catch (error) {
+                // Handle error
+                console.error("Failed to submit form", error);
+              }
+            }}
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );
