@@ -12,7 +12,7 @@ const Index: React.FC<Props> = ({ venues }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [postcode, setPostcode] = useState("");
-  const [showInfo, setShowInfo] = useState(true);
+  const [showInfo, setShowInfo] = useState(false);
   const [selectedVenueIds, setSelectedVenueIds] = useState<number[]>([]);
 
   return (
