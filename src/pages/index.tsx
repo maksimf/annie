@@ -3,17 +3,29 @@ import { Database, Tables } from "@/types/supabase";
 import React, { useState } from "react";
 import Venues from "@/components/Venues";
 import classNames from "classnames";
+import Entertainers from "@/components/Entertainers";
+import { useRouter } from "next/router";
 
 type Props = {
   venues: Tables<"venues">[];
+  entertainers: Tables<"entertainers">[];
 };
 
-const Index: React.FC<Props> = ({ venues }) => {
+const Index: React.FC<Props> = ({ venues, entertainers }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [postcode, setPostcode] = useState("");
+  const [startsAt, setStartsAt] = useState("");
+  const [endsAt, setEndsAt] = useState("");
+  const [partySize, setPartySize] = useState("");
   const [showInfo, setShowInfo] = useState(false);
   const [selectedVenueIds, setSelectedVenueIds] = useState<number[]>([]);
+  const [selectedEntertainerIds, setSelectedEntertainerIds] = useState<
+    number[]
+  >([]);
+  const [inProgress, setInProgress] = useState(false);
+
+  const router = useRouter();
 
   return (
     <div>
@@ -34,36 +46,87 @@ const Index: React.FC<Props> = ({ venues }) => {
                 setShowInfo(true);
               }}
             >
+              <label htmlFor="name" className="text-md block mt-5">
+                Name
+              </label>
               <input
                 type="text"
-                placeholder="Name"
-                className="mt-5 p-2 rounded w-full "
+                placeholder="Jane Doe"
+                className="p-2 rounded w-full"
                 name="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                id="name"
                 required
               />
+              <label htmlFor="email" className="text-md block mt-2">
+                Email
+              </label>
               <input
                 type="email"
-                placeholder="Email"
-                className="mt-5 p-2 rounded w-full"
+                placeholder="jane.doe@example.com"
+                className="p-2 rounded w-full"
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                id="email"
                 required
               />
+              <label htmlFor="postcode" className="text-md block mt-2">
+                Postcode
+              </label>
               <input
                 type="text"
-                placeholder="Postcode: TW9 / TW10"
-                className="mt-5 p-2 rounded w-full"
+                placeholder="TW9 or TW10"
+                className="p-2 rounded w-full"
                 name="postcode"
                 value={postcode}
                 onChange={(e) => setPostcode(e.target.value)}
+                id="postcode"
                 required
               />
               <p className="text-sm italic mt-2">
                 Note: right now we&apos;re only working in the Richmond area
               </p>
+              <label htmlFor="startsAt" className="text-md block mt-2">
+                Event starts at
+              </label>
+              <input
+                type="datetime-local"
+                className="p-2 rounded w-full"
+                id="startsAt"
+                value={startsAt}
+                onChange={(e) => {
+                  setStartsAt(e.target.value);
+                }}
+                required
+              />
+              <label htmlFor="startsAt" className="text-md block mt-2">
+                Event ends at
+              </label>
+              <input
+                type="datetime-local"
+                className="p-2 rounded w-full"
+                id="endsAt"
+                value={endsAt}
+                onChange={(e) => {
+                  setEndsAt(e.target.value);
+                }}
+                required
+              />
+              <label htmlFor="partySize" className="text-md block mt-2">
+                Party size
+              </label>
+              <input
+                type="number"
+                placeholder="12"
+                className="p-2 rounded w-full"
+                name="partySize"
+                value={partySize}
+                onChange={(e) => setPartySize(e.target.value)}
+                id="partySize"
+                required
+              />
               <button
                 type="submit"
                 className="mt-5 px-2 py-4 bg-blue-500 text-white rounded text-xl w-full hover:bg-blue-600 transition-all duration-500"
@@ -89,12 +152,20 @@ const Index: React.FC<Props> = ({ venues }) => {
           setSelectedVenueIds={setSelectedVenueIds}
           venues={venues}
         />
+        <h2 className="text-3xl mb-2 mt-4">Entertainers</h2>
+        <Entertainers
+          selectedEntertainerIds={selectedEntertainerIds}
+          setSelectedEntertainerIds={setSelectedEntertainerIds}
+          entertainers={entertainers}
+        />
         <div>
           <button
             className="mt-5 px-2 py-4 bg-blue-500 text-white rounded text-xl w-full hover:bg-blue-600 transition-all duration-500"
+            disabled={inProgress}
             onClick={async () => {
               try {
-                const response = await fetch("/api/venues", {
+                setInProgress(true);
+                const response = await fetch("/api/leads", {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
@@ -103,7 +174,19 @@ const Index: React.FC<Props> = ({ venues }) => {
                     name,
                     email,
                     postcode,
+                    startsAt,
+                    endsAt,
+                    partySize,
                     venueIds: selectedVenueIds,
+                    entertainerIds: selectedEntertainerIds,
+                    venueEmails: venues
+                      .filter((venue) => selectedVenueIds.includes(venue.id))
+                      .map((venue) => venue.email),
+                    entertainerEmails: entertainers
+                      .filter((entertainer) =>
+                        selectedEntertainerIds.includes(entertainer.id)
+                      )
+                      .map((entertainer) => entertainer.email),
                   }),
                 });
 
@@ -117,10 +200,13 @@ const Index: React.FC<Props> = ({ venues }) => {
               } catch (error) {
                 // Handle error
                 console.error("Failed to submit form", error);
+              } finally {
+                setInProgress(false);
               }
+              router.push("/thanks");
             }}
           >
-            Submit
+            {inProgress ? "Sending..." : "Submit"}
           </button>
         </div>
       </div>
@@ -134,11 +220,13 @@ export const getServerSideProps = async () => {
     process.env.SUPABASE_ANON_KEY || ""
   );
 
-  const venues = await supabase.from("venues").select("*");
+  const venues = (await supabase.from("venues").select("*")).data;
+  const entertainers = (await supabase.from("entertainers").select("*")).data;
 
   return {
     props: {
-      venues: venues.data,
+      venues,
+      entertainers,
     },
   };
 };
