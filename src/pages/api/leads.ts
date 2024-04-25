@@ -135,7 +135,7 @@ export default async function handler(
       .from("leads_entertainers")
       .insert(leadsEntertainers);
 
-    sendEmailsToProviders({
+    await sendEmailsToProviders({
       providerEmails: venueEmails,
       leadEmail: email,
       postcode,
@@ -143,7 +143,7 @@ export default async function handler(
       partySize,
     });
 
-    sendEmailsToProviders({
+    await sendEmailsToProviders({
       providerEmails: entertainerEmails,
       leadEmail: email,
       postcode,
