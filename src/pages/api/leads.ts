@@ -36,7 +36,7 @@ const sendEmail = async (to: string, replyTo: string, html: string) => {
   console.log("Sending email", email);
 
   try {
-    console.log("Before email");
+    console.log("Before email2");
     const response = await sgMail.send(email);
     console.log("After email");
 
