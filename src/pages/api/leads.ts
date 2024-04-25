@@ -36,7 +36,9 @@ const sendEmail = async (to: string, replyTo: string, html: string) => {
   console.log("Sending email", email);
 
   try {
+    console.log("Before email");
     const response = await sgMail.send(email);
+    console.log("After email");
 
     console.log("Email sent", response);
   } catch (error) {
@@ -131,7 +133,6 @@ export default async function handler(
       .from("leads_entertainers")
       .insert(leadsEntertainers);
 
-    debugger;
     sendEmailsToProviders({
       providerEmails: venueEmails,
       leadEmail: email,
