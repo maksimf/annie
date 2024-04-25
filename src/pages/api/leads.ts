@@ -38,9 +38,6 @@ const sendEmail = async (to: string, replyTo: string, html: string) => {
     },
   };
 
-  console.log("API KEY", process.env.SENDGRID_API_KEY);
-  console.log("API KEY (next)", process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
-  console.error("API KEY (error)", process.env.SENDGRID_API_KEY);
   console.log("Sending email", email);
 
   try {
@@ -49,6 +46,8 @@ const sendEmail = async (to: string, replyTo: string, html: string) => {
     console.log("Email sent", response);
   } catch (error) {
     console.error("Failed to send email", error);
+  } finally {
+    console.log("Not sure if emails were sent or not.");
   }
 };
 
