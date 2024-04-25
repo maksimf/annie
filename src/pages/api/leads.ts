@@ -63,21 +63,23 @@ const sendEmailsToProviders = async ({
   dateTime: string;
   partySize: string;
 }) => {
-  providerEmails.forEach((providerEmail) => {
-    sendEmail(
-      providerEmail,
-      leadEmail,
-      `<p>Hello, Annie is here, we have a lead for you here's the details:</p>` +
-        `<ul>` +
-        `<li>Email: ${leadEmail}</li>` +
-        `<li>Postcode: ${postcode}</li>` +
-        `<li>Date and time: ${dateTime}</li>` +
-        `<li>Party size: ${partySize}</li>` +
-        `</ul>` +
-        `<p>If you're interested, please contact the lead directly.</p>` +
-        `<p>Thanks, Annie</p>`
-    );
-  });
+  return Promise.all(
+    providerEmails.map((providerEmail) => {
+      return sendEmail(
+        providerEmail,
+        leadEmail,
+        `<p>Hello, Annie is here, we have a lead for you here's the details:</p>` +
+          `<ul>` +
+          `<li>Email: ${leadEmail}</li>` +
+          `<li>Postcode: ${postcode}</li>` +
+          `<li>Date and time: ${dateTime}</li>` +
+          `<li>Party size: ${partySize}</li>` +
+          `</ul>` +
+          `<p>If you're interested, please contact the lead directly.</p>` +
+          `<p>Thanks, Annie</p>`
+      );
+    })
+  );
 };
 
 export default async function handler(
