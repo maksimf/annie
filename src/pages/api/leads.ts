@@ -16,6 +16,8 @@ type Request = {
   partySize: string;
 };
 
+const adminEmails = ["colixer@gmail.com", "apipko@icloud.com"];
+
 const sendEmail = async (to: string, replyTo: string, html: string) => {
   // Use sendgrid to send email to venue and user
   sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
@@ -38,8 +40,15 @@ const sendEmail = async (to: string, replyTo: string, html: string) => {
 
   try {
     const response = await sgMail.send(email);
+    const adminEmailResponse = await sgMail.send({
+      to: adminEmails,
+      from: "info@annie.services",
+      subject: "New lead from Annie services",
+      html,
+    });
 
     console.log("Email sent", response);
+    console.log("Admin email sent", adminEmailResponse);
   } catch (error) {
     console.error("Failed to send email", error);
   }
