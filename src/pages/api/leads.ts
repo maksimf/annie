@@ -33,7 +33,7 @@ const sendEmail = async (to: string, replyTo: string, html: string) => {
     html,
     mailSettings: {
       sandboxMode: {
-        enable: true || process.env.NODE_ENV === "development",
+        enable: process.env.SANDBOX_EMAILS === "true",
       },
     },
   };
