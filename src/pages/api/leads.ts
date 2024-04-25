@@ -27,6 +27,7 @@ const sendEmail = async (to: string, replyTo: string, html: string) => {
 
   const email = {
     to,
+    bcc: "info@annie.services",
     from: "info@annie.services",
     replyTo,
     subject: "New lead from Annie services",
@@ -36,18 +37,12 @@ const sendEmail = async (to: string, replyTo: string, html: string) => {
   console.log("Sending email", email);
 
   try {
-    console.log("Before email2");
     const response = await sgMail.send(email);
-    console.log("After email");
 
     console.log("Email sent", response);
   } catch (error) {
-    console.log("Before error");
     console.error("Failed to send email", error);
-  } finally {
-    console.log("Not sure if emails were sent or not.");
   }
-  console.log("After everything");
 };
 
 const sendEmailsToProviders = async ({
