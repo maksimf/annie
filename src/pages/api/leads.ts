@@ -31,11 +31,6 @@ const sendEmail = async (to: string, replyTo: string, html: string) => {
     replyTo,
     subject: "New lead from Annie services",
     html,
-    mailSettings: {
-      sandboxMode: {
-        enable: process.env.SANDBOX_EMAILS === "true",
-      },
-    },
   };
 
   console.log("Sending email", email);
