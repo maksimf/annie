@@ -98,7 +98,12 @@ export default async function handler(
       venueEmails,
       entertainerEmails,
     } = req.body as unknown as Request;
-    const dateTime = `${startsAt} - ${endsAt}`;
+    const startDate = new Date(startsAt);
+    const formattedStartDate = startDate.toLocaleString("en-GB");
+    const endDate = new Date(endsAt);
+    const formattedEndDate = endDate.toLocaleString("en-GB");
+
+    const dateTime = `Start: ${formattedStartDate}, end: ${formattedEndDate}`;
 
     const response = await supabase
       .from("leads")
