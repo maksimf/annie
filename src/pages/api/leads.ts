@@ -42,10 +42,12 @@ const sendEmail = async (to: string, replyTo: string, html: string) => {
 
     console.log("Email sent", response);
   } catch (error) {
+    console.log("Before error");
     console.error("Failed to send email", error);
   } finally {
     console.log("Not sure if emails were sent or not.");
   }
+  console.log("After everything");
 };
 
 const sendEmailsToProviders = async ({
