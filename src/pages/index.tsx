@@ -18,7 +18,7 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
   const [startsAt, setStartsAt] = useState("");
   const [endsAt, setEndsAt] = useState("");
   const [partySize, setPartySize] = useState("");
-  const [showInfo, setShowInfo] = useState(false);
+  const [showInfo, setShowInfo] = useState(true);
   const [selectedVenueIds, setSelectedVenueIds] = useState<number[]>([]);
   const [selectedEntertainerIds, setSelectedEntertainerIds] = useState<
     number[]

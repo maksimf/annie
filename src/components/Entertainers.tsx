@@ -1,6 +1,8 @@
 import { Tables } from "@/types/supabase";
 import Image from "next/image";
 import React from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 
 type Props = {
   entertainers: Tables<"entertainers">[];
@@ -13,11 +15,13 @@ const Entertainers: React.FC<Props> = ({
   selectedEntertainerIds,
   setSelectedEntertainerIds,
 }) => {
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay()]);
+
   return (
-    <div className="grid grid-cols-3 gap-5 auto-rows-fr">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 auto-rows-fr">
       {entertainers
         .filter((entertainer) => entertainer.status === "ready")
-        .map(({ id, name, description }) => (
+        .map(({ id, name, description, slug }) => (
           <label
             key={id}
             htmlFor={`entairtainer-checkbox-${id}`}
@@ -51,7 +55,38 @@ const Entertainers: React.FC<Props> = ({
                       : "Select"}
                   </div>
                 </div>
-                <div className="w-full h-[200px] bg-slate-500 mb-5"></div>
+                {!!slug ? (
+                  <div className="overflow-hidden" ref={emblaRef}>
+                    <div className="flex">
+                      <div className="flex-grow-0 flex-shrink-0 basis-full">
+                        <Image
+                          src={`/images/entertainers/${slug}/image1.jpg`}
+                          width={400}
+                          height={300}
+                          alt={name || "Entertainer"}
+                        />
+                      </div>
+                      <div className="flex-grow-0 flex-shrink-0 basis-full">
+                        <Image
+                          src={`/images/entertainers/${slug}/image2.jpg`}
+                          width={400}
+                          height={300}
+                          alt={name || "Entertainer"}
+                        />
+                      </div>
+                      <div className="flex-grow-0 flex-shrink-0 basis-full">
+                        <Image
+                          src={`/images/entertainers/${slug}/image3.jpg`}
+                          width={400}
+                          height={300}
+                          alt={name || "Entertainer"}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="w-full h-[200px] bg-slate-500 mb-5"></div>
+                )}
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {name}
                 </h5>

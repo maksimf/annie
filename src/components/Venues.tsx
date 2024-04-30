@@ -13,7 +13,7 @@ const Venues: React.FC<Props> = ({
   setSelectedVenueIds,
 }) => {
   return (
-    <div className="grid grid-cols-3 gap-5 auto-rows-fr">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 auto-rows-fr">
       {venues
         .filter((venue) => venue.status === "ready")
         .map(({ id, name, description }) => (
