@@ -17,6 +17,7 @@ export type Database = {
           email: string | null
           id: number
           name: string | null
+          number_of_photos: number | null
           price: string | null
           services: string | null
           slug: string | null
@@ -30,6 +31,7 @@ export type Database = {
           email?: string | null
           id?: number
           name?: string | null
+          number_of_photos?: number | null
           price?: string | null
           services?: string | null
           slug?: string | null
@@ -43,6 +45,7 @@ export type Database = {
           email?: string | null
           id?: number
           name?: string | null
+          number_of_photos?: number | null
           price?: string | null
           services?: string | null
           slug?: string | null
@@ -164,6 +167,7 @@ export type Database = {
           location: string | null
           music: string | null
           name: string | null
+          number_of_photos: number | null
           parking: string | null
           policy: string | null
           price: string | null
@@ -188,6 +192,7 @@ export type Database = {
           location?: string | null
           music?: string | null
           name?: string | null
+          number_of_photos?: number | null
           parking?: string | null
           policy?: string | null
           price?: string | null
@@ -212,6 +217,7 @@ export type Database = {
           location?: string | null
           music?: string | null
           name?: string | null
+          number_of_photos?: number | null
           parking?: string | null
           policy?: string | null
           price?: string | null
