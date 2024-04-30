@@ -17,10 +17,10 @@ export type Database = {
           email: string | null
           id: number
           name: string | null
-          photo_url: string | null
           price: string | null
           services: string | null
-          status: string | null
+          slug: string | null
+          status: Database["public"]["Enums"]["provider_status"] | null
           website: string | null
         }
         Insert: {
@@ -30,10 +30,10 @@ export type Database = {
           email?: string | null
           id?: number
           name?: string | null
-          photo_url?: string | null
           price?: string | null
           services?: string | null
-          status?: string | null
+          slug?: string | null
+          status?: Database["public"]["Enums"]["provider_status"] | null
           website?: string | null
         }
         Update: {
@@ -43,10 +43,10 @@ export type Database = {
           email?: string | null
           id?: number
           name?: string | null
-          photo_url?: string | null
           price?: string | null
           services?: string | null
-          status?: string | null
+          slug?: string | null
+          status?: Database["public"]["Enums"]["provider_status"] | null
           website?: string | null
         }
         Relationships: []
@@ -168,7 +168,8 @@ export type Database = {
           policy: string | null
           price: string | null
           rooms: string | null
-          status: string | null
+          slug: string | null
+          status: Database["public"]["Enums"]["provider_status"] | null
           website: string | null
         }
         Insert: {
@@ -191,7 +192,8 @@ export type Database = {
           policy?: string | null
           price?: string | null
           rooms?: string | null
-          status?: string | null
+          slug?: string | null
+          status?: Database["public"]["Enums"]["provider_status"] | null
           website?: string | null
         }
         Update: {
@@ -214,7 +216,8 @@ export type Database = {
           policy?: string | null
           price?: string | null
           rooms?: string | null
-          status?: string | null
+          slug?: string | null
+          status?: Database["public"]["Enums"]["provider_status"] | null
           website?: string | null
         }
         Relationships: []
@@ -227,7 +230,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      provider_status: "pending" | "ready"
     }
     CompositeTypes: {
       [_ in never]: never
