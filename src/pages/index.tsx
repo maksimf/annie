@@ -15,10 +15,11 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [postcode, setPostcode] = useState("");
-  const [startsAt, setStartsAt] = useState("");
-  const [endsAt, setEndsAt] = useState("");
+  // const [startsAt, setStartsAt] = useState("");
+  // const [endsAt, setEndsAt] = useState("");
+  const [eventTime, setEventTime] = useState("");
   const [partySize, setPartySize] = useState("");
-  const [showInfo, setShowInfo] = useState(true);
+  const [showInfo, setShowInfo] = useState(false);
   const [selectedVenueIds, setSelectedVenueIds] = useState<number[]>([]);
   const [selectedEntertainerIds, setSelectedEntertainerIds] = useState<
     number[]
@@ -32,7 +33,7 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
   return (
     <div className="mx-4 md:mx-6">
       <div className="w-fit mx-auto">
-        <div className="">
+        <div>
           <h1 className="text-5xl text-center">Welcome to Annie!</h1>
           <div className="mt-10 text-2xl text-center">
             <p>Looking where to have your child birthday party?</p>
@@ -43,7 +44,7 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
           </div>
           <div>
             <form
-              className="max-w-md [&>input]:text-brand-500 mx-auto"
+              className="max-w-md mx-auto"
               onSubmit={(e) => {
                 e.preventDefault();
 
@@ -93,10 +94,20 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
                 id="postcode"
                 required
               />
-              <p className="text-sm italic mt-2">
-                Note: right now we&apos;re only working in the Richmond area
-              </p>
-              <label htmlFor="startsAt" className="text-md block mt-2">
+              <label htmlFor="eventTime" className="text-md block mt-2">
+                Event date and time (start and end)
+              </label>
+              <input
+                type="text"
+                className="p-2 rounded w-full"
+                name="eventTime"
+                value={eventTime}
+                onChange={(e) => setEventTime(e.target.value)}
+                id="eventTime"
+                required
+                placeholder="2nd of August, 12:00 - 15:00"
+              />
+              {/* <label htmlFor="startsAt" className="text-md block mt-2">
                 Event starts at
               </label>
               <input
@@ -121,7 +132,7 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
                   setEndsAt(e.target.value);
                 }}
                 required
-              />
+              /> */}
               <label htmlFor="partySize" className="text-md block mt-2">
                 Party size
               </label>
@@ -134,6 +145,7 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
                 onChange={(e) => setPartySize(e.target.value)}
                 id="partySize"
                 required
+                min={1}
               />
               <button
                 type="submit"
@@ -183,8 +195,7 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
                     name,
                     email,
                     postcode,
-                    startsAt,
-                    endsAt,
+                    eventTime,
                     partySize,
                     venueIds: selectedVenueIds,
                     entertainerIds: selectedEntertainerIds,

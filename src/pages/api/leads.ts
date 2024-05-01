@@ -11,8 +11,7 @@ type Request = {
   entertainerIds: number[];
   venueEmails: string[];
   entertainerEmails: string[];
-  startsAt: string;
-  endsAt: string;
+  eventTime: string;
   partySize: string;
 };
 
@@ -59,13 +58,13 @@ const sendEmailsToProviders = async ({
   providerEmails,
   leadEmail,
   postcode,
-  dateTime,
+  eventTime,
   partySize,
 }: {
   providerEmails: string[];
   leadEmail: string;
   postcode: string;
-  dateTime: string;
+  eventTime: string;
   partySize: string;
 }) => {
   return Promise.all(
@@ -77,7 +76,7 @@ const sendEmailsToProviders = async ({
           `<ul>` +
           `<li>Email: ${leadEmail}</li>` +
           `<li>Postcode: ${postcode}</li>` +
-          `<li>Date and time: ${dateTime}</li>` +
+          `<li>Date and time: ${eventTime}</li>` +
           `<li>Party size: ${partySize}</li>` +
           `</ul>` +
           `<p>If you're interested, please contact the lead directly.</p>` +
@@ -100,20 +99,19 @@ export default async function handler(
       name,
       email,
       postcode,
-      startsAt,
-      endsAt,
+      eventTime,
       partySize,
       venueIds,
       entertainerIds,
       venueEmails,
       entertainerEmails,
     } = req.body as unknown as Request;
-    const startDate = new Date(startsAt);
-    const formattedStartDate = startDate.toLocaleString("en-GB");
-    const endDate = new Date(endsAt);
-    const formattedEndDate = endDate.toLocaleString("en-GB");
+    // const startDate = new Date(startsAt);
+    // const formattedStartDate = startDate.toLocaleString("en-GB");
+    // const endDate = new Date(endsAt);
+    // const formattedEndDate = endDate.toLocaleString("en-GB");
 
-    const dateTime = `Start: ${formattedStartDate}, end: ${formattedEndDate}`;
+    // const dateTime = `Start: ${formattedStartDate}, end: ${formattedEndDate}`;
 
     const response = await supabase
       .from("leads")
@@ -151,7 +149,7 @@ export default async function handler(
       providerEmails: venueEmails,
       leadEmail: email,
       postcode,
-      dateTime,
+      eventTime,
       partySize,
     });
 
@@ -159,7 +157,7 @@ export default async function handler(
       providerEmails: entertainerEmails,
       leadEmail: email,
       postcode,
-      dateTime,
+      eventTime,
       partySize,
     });
 
