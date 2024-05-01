@@ -18,7 +18,7 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
   const [startsAt, setStartsAt] = useState("");
   const [endsAt, setEndsAt] = useState("");
   const [partySize, setPartySize] = useState("");
-  const [showInfo, setShowInfo] = useState(false);
+  const [showInfo, setShowInfo] = useState(true);
   const [selectedVenueIds, setSelectedVenueIds] = useState<number[]>([]);
   const [selectedEntertainerIds, setSelectedEntertainerIds] = useState<
     number[]
@@ -30,18 +30,20 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
   const router = useRouter();
 
   return (
-    <div>
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-5xl">Welcome to Annie!</h1>
-          <div className="mt-10 text-2xl">
+    <div className="mx-4 md:mx-6">
+      <div className="w-fit mx-auto">
+        <div className="">
+          <h1 className="text-5xl text-center">Welcome to Annie!</h1>
+          <div className="mt-10 text-2xl text-center">
             <p>Looking where to have your child birthday party?</p>
             <p>Check out our venues and entairtainers.</p>
-            <p className="mt-5">Fill out a short form to get started:</p>
+            <p className="mt-5 text-center">
+              Fill out a short form to get started:
+            </p>
           </div>
           <div>
             <form
-              className="max-w-md [&>input]:text-brand-500"
+              className="max-w-md [&>input]:text-brand-500 mx-auto"
               onSubmit={(e) => {
                 e.preventDefault();
 
@@ -142,9 +144,9 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
             </form>
           </div>
         </div>
-        <div className="w-[600px] h-[400px] bg-yellow-100 text-gray-400 italic flex justify-center items-center">
+        {/* <div className="w-[600px] h-[400px] bg-yellow-100 text-gray-400 italic flex justify-center items-center">
           Picture of happy kids with their parents
-        </div>
+        </div> */}
       </div>
       <div
         className={classNames("mt-20 mb-10 transition-all duration-500", {
