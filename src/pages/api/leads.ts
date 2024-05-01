@@ -29,6 +29,7 @@ const sendEmail = async (to: string, replyTo: string, html: string) => {
 
   const email = {
     to,
+    cc: replyTo,
     bcc: "info@annie.services",
     from: "info@annie.services",
     replyTo,
