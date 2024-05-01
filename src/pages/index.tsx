@@ -18,12 +18,14 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
   const [startsAt, setStartsAt] = useState("");
   const [endsAt, setEndsAt] = useState("");
   const [partySize, setPartySize] = useState("");
-  const [showInfo, setShowInfo] = useState(true);
+  const [showInfo, setShowInfo] = useState(false);
   const [selectedVenueIds, setSelectedVenueIds] = useState<number[]>([]);
   const [selectedEntertainerIds, setSelectedEntertainerIds] = useState<
     number[]
   >([]);
   const [inProgress, setInProgress] = useState(false);
+
+  const providersDivRef = React.useRef<HTMLDivElement>(null);
 
   const router = useRouter();
 
@@ -44,6 +46,10 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
                 e.preventDefault();
 
                 setShowInfo(true);
+
+                providersDivRef.current?.scrollIntoView({
+                  behavior: "smooth",
+                });
               }}
             >
               <label htmlFor="name" className="text-md block mt-5">
@@ -145,6 +151,7 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
           "opacity-100": showInfo,
           "opacity-0": !showInfo,
         })}
+        ref={providersDivRef}
       >
         <h2 className="text-3xl mb-2">Venues</h2>
         <Venues
