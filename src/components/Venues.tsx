@@ -18,7 +18,7 @@ const Venues: React.FC<Props> = ({
   const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay()]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 auto-rows-fr">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 auto-rows-fr">
       {venues
         .filter((venue) => venue.status === "ready")
         .map(

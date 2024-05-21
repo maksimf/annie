@@ -36,11 +36,13 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
         <div>
           <h1 className="text-5xl text-center">Welcome to Annie!</h1>
           <div className="mt-10 text-2xl text-center">
-            <p>Looking where to have your child birthday party?</p>
-            <p>Check out our venues and entairtainers.</p>
-            <p className="mt-5 text-center">
-              Fill out a short form to get started:
+            <p>Start by telling Annie your party details:</p>
+            <p>
+              location, date, what you need
+              <br />
+              and any other requirements.
             </p>
+            <p>You will see matched options right away.</p>
           </div>
           <div>
             <form
@@ -56,7 +58,7 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
               }}
             >
               <label htmlFor="name" className="text-md block mt-5">
-                Name
+                Your name
               </label>
               <input
                 type="text"
@@ -69,7 +71,7 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
                 required
               />
               <label htmlFor="email" className="text-md block mt-2">
-                Email
+                Your email
               </label>
               <input
                 type="email"
@@ -82,7 +84,7 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
                 required
               />
               <label htmlFor="postcode" className="text-md block mt-2">
-                Postcode
+                Your party postcode
               </label>
               <input
                 type="text"
@@ -95,7 +97,7 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
                 required
               />
               <label htmlFor="eventTime" className="text-md block mt-2">
-                Event date and time (start and end)
+                Event date and timeframe
               </label>
               <input
                 type="text"
@@ -149,9 +151,9 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
               />
               <button
                 type="submit"
-                className="mt-5 px-2 py-4 bg-blue-500 text-white rounded text-xl w-full hover:bg-blue-600 transition-all duration-500"
+                className="mt-5 w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Get started
+                See my options
               </button>
             </form>
           </div>
@@ -167,6 +169,11 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
         })}
         ref={providersDivRef}
       >
+        <p className="mb-4">
+          Now review venues and acts. Shortlist by ticking and send requests in
+          one click. We recommend sending requests to 2-3 venues and acts
+          minimum to ensure you get a response.
+        </p>
         <h2 className="text-3xl mb-2">Venues</h2>
         <Venues
           selectedVenueIds={selectedVenueIds}
@@ -180,8 +187,12 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
           entertainers={entertainers}
         />
         <div>
+          <p className="mt-4">
+            Now click the Submit button and watch the magic happen as venues and
+            entertainers respond confirming their availability and terms.
+          </p>
           <button
-            className="mt-5 px-2 py-4 bg-blue-500 text-white rounded text-xl w-full hover:bg-blue-600 transition-all duration-500"
+            className="mt-5 w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             disabled={inProgress}
             onClick={async () => {
               try {
