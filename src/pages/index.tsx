@@ -1,10 +1,9 @@
 import { createClient } from "@supabase/supabase-js";
 import { Database, Tables } from "@/types/supabase";
 import React, { useState } from "react";
-import Venues from "@/components/Venues";
 import classNames from "classnames";
-import Entertainers from "@/components/Entertainers";
 import { useRouter } from "next/router";
+import ListProviders from "@/components/providers/ListProviders";
 
 type Props = {
   venues: Tables<"venues">[];
@@ -15,11 +14,9 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [postcode, setPostcode] = useState("");
-  // const [startsAt, setStartsAt] = useState("");
-  // const [endsAt, setEndsAt] = useState("");
   const [eventTime, setEventTime] = useState("");
   const [partySize, setPartySize] = useState("");
-  const [showInfo, setShowInfo] = useState(false);
+  const [showInfo, setShowInfo] = useState(true);
   const [selectedVenueIds, setSelectedVenueIds] = useState<number[]>([]);
   const [selectedEntertainerIds, setSelectedEntertainerIds] = useState<
     number[]
@@ -34,8 +31,8 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
     <div className="mx-4 md:mx-6">
       <div className="w-fit mx-auto">
         <div>
-          <h1 className="text-5xl text-center">Welcome to Annie!</h1>
-          <div className="mt-10 text-2xl text-center">
+          <h1 className="text-5xl text-center">Welcome to Annie💁‍♀️🪄</h1>
+          {/* <div className="mt-10 text-2xl text-center">
             <p>Start by telling Annie your party details:</p>
             <p>
               location, date, what you need
@@ -43,8 +40,8 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
               and any other requirements.
             </p>
             <p>You will see matched options right away.</p>
-          </div>
-          <div>
+          </div> */}
+          <div className="hidden">
             <form
               className="max-w-md mx-auto"
               onSubmit={(e) => {
@@ -109,32 +106,6 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
                 required
                 placeholder="2nd of August, 12:00 - 15:00"
               />
-              {/* <label htmlFor="startsAt" className="text-md block mt-2">
-                Event starts at
-              </label>
-              <input
-                type="datetime-local"
-                className="p-2 rounded w-full"
-                id="startsAt"
-                value={startsAt}
-                onChange={(e) => {
-                  setStartsAt(e.target.value);
-                }}
-                required
-              />
-              <label htmlFor="startsAt" className="text-md block mt-2">
-                Event ends at
-              </label>
-              <input
-                type="datetime-local"
-                className="p-2 rounded w-full"
-                id="endsAt"
-                value={endsAt}
-                onChange={(e) => {
-                  setEndsAt(e.target.value);
-                }}
-                required
-              /> */}
               <label htmlFor="partySize" className="text-md block mt-2">
                 Party size
               </label>
@@ -158,9 +129,6 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
             </form>
           </div>
         </div>
-        {/* <div className="w-[600px] h-[400px] bg-yellow-100 text-gray-400 italic flex justify-center items-center">
-          Picture of happy kids with their parents
-        </div> */}
       </div>
       <div
         className={classNames("mt-20 mb-10 transition-all duration-500", {
@@ -170,22 +138,14 @@ const Index: React.FC<Props> = ({ venues, entertainers }) => {
         ref={providersDivRef}
       >
         <p className="mb-4">
-          Now review venues and acts. Shortlist by ticking and send requests in
-          one click. We recommend sending requests to 2-3 venues and acts
-          minimum to ensure you get a response.
+          Review venues and acts. Shortlist by ticking and send requests in one
+          click. We recommend sending requests to 2-3 venues and acts minimum to
+          ensure you get a response.
         </p>
         <h2 className="text-3xl mb-2">Venues</h2>
-        <Venues
-          selectedVenueIds={selectedVenueIds}
-          setSelectedVenueIds={setSelectedVenueIds}
-          venues={venues}
-        />
-        <h2 className="text-3xl mb-2 mt-4">Entertainers</h2>
-        <Entertainers
-          selectedEntertainerIds={selectedEntertainerIds}
-          setSelectedEntertainerIds={setSelectedEntertainerIds}
-          entertainers={entertainers}
-        />
+        <ListProviders kind="venues" providers={venues} />
+        <h2 className="text-3xl mb-2 mt-4">Acts</h2>
+        <ListProviders kind="acts" providers={entertainers} />
         <div>
           <p className="mt-4">
             Now click the Submit button and watch the magic happen as venues and
